@@ -1,0 +1,27 @@
+name: Auto test
+
+on:
+  push:
+    branches: master
+
+
+env:
+  IMAGE_ID: "oitnes/base_cpp"
+  TEST_IMAGE_TAG: "test"
+
+
+jobs:
+  push:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Pull
+        run: docker pull ${IMAGE_ID}
+
+      - name: Build and run
+        run: docker build -t ${TEST_IMAGE_TAG} -f Dockerfile --build-arg DOCKER_IMAGE=${IMAGE_ID} ${PWD}
+
+      - name: Run
+        run: docker run ${TEST_IMAGE_TAG}
