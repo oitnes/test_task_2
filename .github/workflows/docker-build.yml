@@ -6,9 +6,7 @@ on:
 
 
 env:
-  IMAGE_ID: "oitnes/base_cpp"
-  IMAGE_VERSION: "1.0"
-  TEST_IMAGE_TAG: "test"
+  TEST_IMAGE_TAG: "application_image"
 
 
 jobs:
@@ -18,11 +16,8 @@ jobs:
     steps:
       - uses: actions/checkout@v2
 
-      - name: Pull
-        run: docker pull "${IMAGE_ID}:${IMAGE_VERSION}"
-
       - name: Build
-        run: docker build -t ${TEST_IMAGE_TAG} -f Dockerfile --build-arg DOCKER_IMAGE=${IMAGE_ID} --build-arg IMAGE_VERSION=${IMAGE_VERSION} ${PWD}
+        run: docker build -t ${TEST_IMAGE_TAG} -f Dockerfile ${PWD}
 
       - name: Run
         run: docker run ${TEST_IMAGE_TAG}
